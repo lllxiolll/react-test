@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-
-import {MapContainer} from './components/MapContainer';
+import {MapGoogle} from './components/MapContainer';
 
 const URI = 'https://gist.githubusercontent.com/nept/0f311e330a7881fff35d9a8aca129bb2/raw/1227b03c6f85950095b302c4c0c5f5843a604094/cities.json';
 
 class App extends Component {
   constructor(props){
     super(props);
-    console.log('#constructor');
+    console.log('#constructor App');
     this.state = {
       data: [],
       isLoading: true,
@@ -66,7 +65,7 @@ class App extends Component {
 
 
   render() {
-    console.log('#render');
+    console.log('#render App;js');
     return (
       <div className="wrapper">
        {/* <header className="wrapper-header">
@@ -78,7 +77,7 @@ class App extends Component {
                  {this.renderData()}
           </div>
           <div className="wrapper-map">
-            <MapContainer />
+            <MapGoogle/>
           </div>
         </main>
       </div>

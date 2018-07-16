@@ -1,4 +1,3 @@
-import React from 'react';
 /*import { compose, withProps } from "recompose";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
@@ -22,53 +21,87 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
   ));
     */
 
-   import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-
-   export class MapContainer extends React.Component {
-    constructor(props){
-      super(props);
-      this.state = {
-        showingInfoWindow: false,
-        activeMarker: {},
-        selectedPlace: {},
-      };
-    }
-
-    onMarkerClick = (props, marker, e) =>
-        this.setState({
-          selectedPlace: props,
-          activeMarker: marker,
-          showingInfoWindow: true
-        });
-    
-      onMapClicked = (props) => {
-        if (this.state.showingInfoWindow) {
-          this.setState({
-            showingInfoWindow: false,
-            activeMarker: null
-          })
-        }
-      };
-
-     render() {
-       return (
-         <Map google={this.props.google} zoom={14}>
+   import React from 'react';
+   import { browserHistory } from 'react-router';
+   import parse from 'utils/parse';
+   import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
    
-           <Marker onClick={this.onMarkerClick}
-                   name={'Current location'} />
    
-           <InfoWindow
-           onOpen={this.windowHasOpened}
-           onClose={this.onInfoWindowClose}>
-               <div>
-                 <h1>{this.state.selectedPlace.name}</h1>
-               </div>
-           </InfoWindow>
-         </Map>
-       );
+   const GettingStartedGoogleMap = withGoogleMap(props => (
+     <GoogleMap
+       ref={props.onMapLoad}
+       defaultZoom={3}
+       defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+       onClick={props.onMapClick}
+     >
+       {props.markers.map((marker, index) => (
+         <Marker
+           {...marker}
+           onRightClick={() => props.onMarkerRightClick(index)}
+         />
+       ))}
+     </GoogleMap>
+   ));
+   
+   
+   export default class MapGoogle extends React.PureComponent { 
+   
+   
+   
+     constructor() {
+       super();
+       this.saveButtonPressed = this.saveCheckin.bind(this);
      }
-   }
    
-   export default GoogleApiWrapper({
-     apiKey: ("AIzaSyBgKNsorbH8sQMY1ino6gwbWXyaHUaP8wE")
-   })(MapContainer)
+    
+   
+     componentDidMount() {
+       console.log("component is mounted");
+       
+     }
+   
+    render() {
+   
+       const marginStyle = {
+         margin: '60px 20px 10px 20px',
+       };
+   
+       const mySettingsBtn = {
+         marginTop: '10px',
+       };
+     return (
+         <div className="row" style={marginStyle}>
+           <div className="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+             <h2>Check in</h2>
+             <a href="/checkinhistory">View Checkin History</a><br/>
+             <br/>
+   
+   
+   
+               <GettingStartedGoogleMap
+                containerElement={
+                   <div style={{ height: `100%` }} />
+              }
+              mapElement={
+                <div style={{ height: `100%` }} />
+              }
+             /* onMapLoad={_.noop}
+              onMapClick={_.noop}
+              markers={markers}
+              onMarkerRightClick={_.noop}*/
+             />
+   
+   
+   
+             <form>
+               <div class="form-group">
+                 <input type="text" className="form-control" name="fname" placeholder="Add note here"/>
+               </div>
+             </form> <br/>
+             <button className="btn btn-lg btn-info btn-block" style={mySettingsBtn} onClick={this.saveButtonPressed}>Check In</button>
+           </div>
+         </div>
+       );
+    }
+     
+    }
