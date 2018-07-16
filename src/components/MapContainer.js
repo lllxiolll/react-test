@@ -18,4 +18,4 @@ render(
 )
 }
 
-export default MyMapComponent;
+export default MyMap;
