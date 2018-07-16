@@ -31,8 +31,6 @@ class App extends Component {
       })
       .then(data => this.setState({ data , isLoading: false }))
       .catch(error => this.setState({error, isLoading: false}));
-
-
   }
 
   renderData() {
