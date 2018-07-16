@@ -40,21 +40,12 @@ html, body, #react-main {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 30% 70%;
   grid-column-gap: 0.5em;
  /* border: brown 5px solid;*/
 }
-      /*  Tous les sous div */
-.wrapper-body > div {
-  
- 
-}
-      /*  Le 1er enfant de div */
-.wrapper-body > div:nth-child(odd){
-  
-}
 
-/* 4 = Wrapper LEFT */
+/* 4  */
 .wrapper-bucket {
   color: black;
   overflow: scroll;
@@ -62,7 +53,7 @@ html, body, #react-main {
   grid-gap: 0.5em;
 }
 
-/*Wrapper Bucket Left */
+/*Wrapper */
 .wrapper-bucket__item {
   display: grid;
   grid-template-columns: 30% 70%;
@@ -79,11 +70,11 @@ html, body, #react-main {
 }
 
 
-/* 5 = Wrapper RIGHT */
+/* 5  */
 .wrapper-map {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 500px;
   color: pink;
   background-color: grey;
 }

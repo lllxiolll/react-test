@@ -1,36 +1,72 @@
 import React from "react";
-import { compose, withProps } from "recompose";
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+const fetch = require("isomorphic-fetch");
+const { compose, withProps, withHandlers } = require("recompose");
+const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
+const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
-const MyMapComponent = compose(
+const MapWithAMarkerClusterer = compose(
   withProps({
-    googleMapURL:
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBgKNsorbH8sQMY1ino6gwbWXyaHUaP8wE&v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `100%` }} />,
-    mapElement: <div style={{ height: `100%` }} />
+    containerElement: <div style={{ height: `500px` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withHandlers({
+    onMarkerClustererClick: () => (markerClusterer) => {
+      const clickedMarkers = markerClusterer.getMarkers()
+      console.log(`Current clicked markers length: ${clickedMarkers.length}`)
+      console.log(clickedMarkers)
+    },
   }),
   withScriptjs,
   withGoogleMap
-)(props => (
-  <GoogleMap 
-  defaultZoom={8} 
-  defaultCenter={{ lat: 40.7127837, lng: -74.0059413 }}
+)(props =>
+  <GoogleMap
+    defaultZoom={3}
+    defaultCenter={{ lat: 40.7127837, lng: -74.0059413 }}
   >
-    {props.isMarkerShown && (
-      <Marker 
-      position={
-        { 
-          lat: 40.7127837, 
-          lng: -74.0059413 
-        }} 
-      onClick={
-        props.onMarkerClick
-      } />
-    )}
+    <MarkerClusterer
+      onClick={props.onMarkerClustererClick}
+      averageCenter
+      enableRetinaIcons
+      gridSize={60}
+    >
+      {props.markers.map(marker => (
+        <Marker
+          key={marker.rank}
+          position={{ lat: marker.latitude, lng: marker.longitude }}
+        />
+      ))}
+    </MarkerClusterer>
   </GoogleMap>
-));
+);
 
+class MyMapComponent extends React.PureComponent {
+  componentWillMount() {
+    this.setState({ markers: [] })
+  }
 
+  componentDidMount() {
+    const url = [
+      // Length issue
+      `https://gist.githubusercontent.com`,
+      `/nept/0f311e330a7881fff35d9a8aca129bb2`,
+      `/raw/1227b03c6f85950095b302c4c0c5f5843a604094/cities.json`
+    ].join("")
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ markers: data });
+      });
+      console.log('#Dimount', this.data);
+  }
+
+  render() {
+    return (
+      <MapWithAMarkerClusterer markers={this.state.markers} />
+    )
+  }
+}
 
 export default MyMapComponent;
