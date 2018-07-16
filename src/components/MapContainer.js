@@ -1,7 +1,7 @@
 import React from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
-class MyMap extends React.Component {
+  
 const MyMapComponent = withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={8}
@@ -11,11 +11,4 @@ const MyMapComponent = withGoogleMap((props) =>
   </GoogleMap>
 )
 
-render(
-  return(
-    <MyMapComponent/>
-  );
-)
-}
-
-export default MyMap;
+export default MyMapComponent;
