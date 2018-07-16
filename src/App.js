@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+
+import {MapContainer} from './components/MapContainer';
 
 const URI = 'https://gist.githubusercontent.com/nept/0f311e330a7881fff35d9a8aca129bb2/raw/1227b03c6f85950095b302c4c0c5f5843a604094/cities.json';
 
 class App extends Component {
   constructor(props){
     super(props);
+    console.log('#constructor');
     this.state = {
       data: [],
-      isLoading: false,
+      isLoading: true,
       error: null
     }
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
+    console.log('#componentDidMount');
+    // this.setState({ isLoading: true });
 
     fetch(URI)
       .then(response => {
@@ -28,11 +32,12 @@ class App extends Component {
       })
       .then(data => this.setState({ data , isLoading: false }))
       .catch(error => this.setState({error, isLoading: false}));
+
+
   }
 
-
-  render() {
-      const {data, isLoading, error} = this.state;
+  renderData() {
+    const {data, isLoading, error} = this.state;
 
       if (error) {
         return <p>{error.message}</p>;
@@ -41,31 +46,41 @@ class App extends Component {
       if (isLoading){
         return <p>Loading ...</p>
       }
-
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1>Fetching Data 
-          <button className="btn btn-danger">Fetch now</button>
-          </h1>
-        </header>
-        <div className="loader">
-          <div className="icon"></div>
-        </div>
-        <div >
-          <ul>
-            {
               data.map(
                 data =>
-                  <li key={data.rank}>
-                    <a>{data.city}</a>
-                    <a>{data.growth_from_2000_to_2013}</a>
-                    <a>{data.population}</a>
-                  </li>
-              )}
-          </ul>
-        </div>
+                <div className="wrapper-bucket__item"  key={data.rank}>                 
+                    <div className="wrapper-bucket__item__data-growth">
+                      {data.growth_from_2000_to_2013}
+                      <div>Rank : {data.rank}</div>
+                    </div>
+                    <div>
+                        <div> {data.city} - {data.state}</div>
+                        <div>Population : {data.population}</div>  
+                        <div>Long : {data.longitude} Lat : {data.latitude} </div>
+                    </div>
+                </div>
+             )
+    );
+  }
+
+
+  render() {
+    console.log('#render');
+    return (
+      <div className="wrapper">
+       {/* <header className="wrapper-header">
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
+    */}
+        <main className="wrapper-body">
+          <div className="wrapper-bucket">
+                 {this.renderData()}
+          </div>
+          <div className="wrapper-map">
+            <MapContainer />
+          </div>
+        </main>
       </div>
     );
   }
