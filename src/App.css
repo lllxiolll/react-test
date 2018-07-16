@@ -82,6 +82,8 @@ html, body, #react-main {
 /* 5 = Wrapper RIGHT */
 .wrapper-map {
   position: relative;
+  width: 100%;
+  height: 400px;
   color: pink;
-  background: paleturquoise;
+  background-color: grey;
 }

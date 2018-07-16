@@ -77,7 +77,7 @@ class App extends Component {
                  {this.renderData()}
           </div>
           <div className="wrapper-map">
-          <MyMapComponent />
+            <MyMapComponent isMarkerShown/>
           </div>
         </main>
       </div>
