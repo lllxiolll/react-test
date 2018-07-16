@@ -8,7 +8,6 @@ const URI = 'https://gist.githubusercontent.com/nept/0f311e330a7881fff35d9a8aca1
 class App extends Component {
   constructor(props){
     super(props);
-    console.log('#constructor App');
     this.state = {
       data: [],
       isLoading: true,
@@ -17,9 +16,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('#componentDidMount');
-    // this.setState({ isLoading: true });
-
     fetch(URI)
       .then(response => {
         if(response.ok) {
@@ -51,7 +47,8 @@ class App extends Component {
                 <div className="wrapper-bucket__item"  key={data.rank}>                 
                     <div className="wrapper-bucket__item__data-growth">
                       {data.growth_from_2000_to_2013}
-                      <div>Rank : {data.rank}</div>
+                      <div>{data.rank}</div>
+                      <div>Rank</div>
                     </div>
                     <div>
                         <div> {data.city} - {data.state}</div>
@@ -65,7 +62,6 @@ class App extends Component {
 
 
   render() {
-    console.log('#render App;js');
     return (
       <div className="wrapper">
        {/* <header className="wrapper-header">

@@ -1,6 +1,6 @@
 import React from "react";
 const fetch = require("isomorphic-fetch");
-const { compose, withProps, withHandlers } = require("recompose");
+const { compose, withProps } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
@@ -11,19 +11,12 @@ const MapWithAMarkerClusterer = compose(
     containerElement: <div style={{ height: `500px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
-  withHandlers({
-    onMarkerClustererClick: () => (markerClusterer) => {
-      const clickedMarkers = markerClusterer.getMarkers()
-      console.log(`Current clicked markers length: ${clickedMarkers.length}`)
-      console.log(clickedMarkers)
-    },
-  }),
   withScriptjs,
   withGoogleMap
 )(props =>
   <GoogleMap
     defaultZoom={3}
-    defaultCenter={{ lat: 40.7127837, lng: -74.0059413 }}
+    defaultCenter={{ lat: 38.891565, lng: -121.2930079 }}
   >
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
@@ -59,7 +52,6 @@ class MyMapComponent extends React.PureComponent {
       .then(data => {
         this.setState({ markers: data });
       });
-      console.log('#Dimount', this.data);
   }
 
   render() {
