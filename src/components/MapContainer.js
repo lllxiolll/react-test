@@ -22,8 +22,6 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
     */
 
    import React from 'react';
-   import { browserHistory } from 'react-router';
-   import parse from 'utils/parse';
    import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
    
    
@@ -44,24 +42,18 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
    ));
    
    
-   export default class MapGoogle extends React.PureComponent { 
-   
-   
-   
+class MapGoogle extends React.PureComponent { 
      constructor() {
        super();
        this.saveButtonPressed = this.saveCheckin.bind(this);
      }
-   
-    
-   
+
      componentDidMount() {
        console.log("component is mounted");
        
      }
    
-    render() {
-   
+    render() {   
        const marginStyle = {
          margin: '60px 20px 10px 20px',
        };
@@ -103,5 +95,5 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
          </div>
        );
     }
-     
-    }
+  }
+  export default MapGoogle;
